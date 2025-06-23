@@ -1,18 +1,21 @@
 pipeline {
-  agent none
-  stages{
-    stage ('build and run') {
-      parallel {
-        stage ('master-agent-parallel'){
-          agent {label 'master'}
-          steps {
-            echo "build"
-          }
+    agent any
+    stages {
+        stage ("check conditions choice 1"){
+            when {
+                expression {choice == '1'}
+             }
+              steps{
+                    echo "hello,choice1!"
+                }
         }
-        stage ("test") {
-          steps{
-          echo "test"
+        stage ("check the condition choice 2"){
+            when {
+                expression {choice == '2'}
+               }
+                 steps {
+                    echo "hello,choice2"
+                }
         }
-        }
-      }
     }
+}
