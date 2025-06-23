@@ -1,21 +1,23 @@
 pipeline {
     agent any
     stages {
-        stage ("check conditions choice 1"){
+        stage ("parallel job") {
             when {
-                expression {choice == '1'}
-             }
-              steps{
-                    echo "hello,choice1!"
+                branch "master"
+            }
+            parallel {
+                stage ('backend'){
+                    steps {
+                        echo "buliding the backend"
+                    }
                 }
-        }
-        stage ("check the condition choice 2"){
-            when {
-                expression {choice == '2'}
-               }
-                 steps {
-                    echo "hello,choice2"
+                stage ('frontend') {
+                    steps {
+                        echo "bulinding the frontend"
+                    }
                 }
+            }
         }
     }
 }
+
